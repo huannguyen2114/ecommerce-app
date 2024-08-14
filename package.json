@@ -2,6 +2,7 @@
   "name": "ecommerce_backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "directories": {
     "doc": "docs"
   },
@@ -13,15 +14,20 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "bcrypt": "^5.1.1",
     "compression": "^1.7.4",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsx-a11y": "^6.9.0",
-    "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-prettier": "^5.2.1",
     "express": "^4.19.2",
+    "globals": "^15.9.0",
     "helmet": "^7.1.0",
+    "mongoose": "^8.5.2",
     "morgan": "^1.10.0",
     "prettier": "^3.3.3"
   }
