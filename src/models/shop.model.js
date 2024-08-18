@@ -1,11 +1,11 @@
-import { Collection, model, Schema, Types } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const DOCUMENT_NAME = 'Shop';
 const COLLECTION_NAME = 'Shops';
 
 const shopSchema = new Schema({
   name: {
-    Type: String,
+    type: String,
     trim: true,
     maxLength: 150
   },
@@ -31,8 +31,10 @@ const shopSchema = new Schema({
     type: Array,
     default: []
   },
-  timestalmps: true,
+}, {
+
+  timestamps: true,
   collection: COLLECTION_NAME
-})
+});
 
 export default model(DOCUMENT_NAME, shopSchema);
