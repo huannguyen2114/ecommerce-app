@@ -3,9 +3,9 @@
 ### signup
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
-
+x-api-key: d025d401e51accddca73604b140666907d961a84a3aef400cf5321b4d1a3aa253835874d2293ed49fa19f1671179feeb01d1e0afcbc7c8a2c729509b564be18b
 {
-    "name": "M shops",
-    "email": "abccc@abcc.com",
+    "name": "My shops",
+    "email": "abc@abc.com",
     "password": "abcdef"
 }
