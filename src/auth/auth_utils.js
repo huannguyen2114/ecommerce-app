@@ -7,7 +7,8 @@ import { SuccessResponse } from '../core/success.response.js';
 const HEADER = {
   API_KEY: 'x-api-key',
   CLIENT_ID: 'x-client-id',
-  AUTHORIZATION: 'authorization'
+  AUTHORIZATION: 'authorization',
+  REFRESH_TOKEN: 'refreshToken'
 };
 
 const createTokenPair = async (payload, publicKey, privateKey) => {
@@ -57,6 +58,7 @@ const authentication = asyncHandler(async (req, res, next) => {
       throw new AuthFailureError('Invalid user!');
     }
     req.keyStore = keyStore;
+    req.user = decodeUser;
     return next();
   } catch (error) {
     console.error(error);
@@ -64,7 +66,38 @@ const authentication = asyncHandler(async (req, res, next) => {
   }
 })
 
+const authenticationV2 = asyncHandler(async (req, res, next) => {
+  const userId = req.headers[HEADER.CLIENT_ID];
+  if (!userId) {
+    throw new AuthFailureError('Invalid client!');
+  }
+
+  const keyStore = await KeyTokenService.findByUserId({ userId });
+  if (!keyStore) {
+    throw new SuccessResponse();
+  }
+
+
+  if (req.headers[HEADER.REFRESH_TOKEN]) {
+    try {
+      const refreshToken = req.headers[HEADER.REFRESH_TOKEN];
+      const decodeUser = JWT.verify(refreshToken, keyStore.privateKey);
+      if (userId !== decodeUser.userId) {
+        throw new AuthFailureError('Invalid user!');
+      }
+      req.keyStore = keyStore;
+      req.user = decodeUser;
+      req.refreshToken = refreshToken;
+      return next();
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+})
 export {
   createTokenPair,
-  authentication
+  authentication,
+  authenticationV2
 };

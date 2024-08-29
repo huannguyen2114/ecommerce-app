@@ -96,30 +96,27 @@ class AccessService {
     return await KeyTokenService.removeKeyById(keyStore._id);
   }
 
-  static handleRefreshToken = async (refreshToken) => {
-    const foundToken = KeyTokenService.findByRefreshTokenUsed(refreshToken);
+  static handleRefreshToken = async ({ keyStore, refreshToken, user }) => {
+    const { userId, email } = user;
 
-    if (foundToken) {
-      const { userId, email } = await JWT.verify(refreshToken, foundToken.privateKey);
+    if (keyStore.refreshTokenUsed.include(refreshToken)) {
       await KeyTokenService.removeKeyById(userId);
       throw new ForbiddenError('Something wrong happened :( !! Please login again');
     }
 
-    const holderToken = await KeyTokenService.findByRefreshToken({ refreshToken });
-    if (!holderToken) {
+    if (keyStore.refreshToken !== refreshToken) {
       throw new AuthFailureError('Shop not registered!');
     }
 
-    const { userId, email } = await JWT.verify(refreshToken, holderToken.privateKey);
     const foundShop = await findByEmail({ email });
     if (!foundShop) {
       throw new AuthFailureError('Shop not registered!');
     }
 
 
-    const tokens = createTokenPair({ userId, email }, holderToken.publicKey, holderToken.privateKey);
+    const tokens = createTokenPair({ userId, email }, keyStore.publicKey, keyStore.privateKey);
 
-    await holderToken.update({
+    await keyStore.update({
       $set: {
         refreshToken: tokens.refreshToken
       },
@@ -129,7 +126,7 @@ class AccessService {
     })
 
     return {
-      user: { userId, email },
+      user,
       tokens
     }
   }

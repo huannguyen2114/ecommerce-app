@@ -1,5 +1,6 @@
 import { Router } from "express";
 import accessRoute from './access/index.js';
+import productRoute from './product/index.js'
 import { apiKey, permission } from "../auth/check_auth.js";
 const router = Router();
 
@@ -9,8 +10,10 @@ router.use(apiKey);
 // check permission
 router.use(permission('0000'));
 
-// TODO: signup api
-router.use('/v1/api', accessRoute);
+// Define util route
+router.use('/shop', accessRoute);
+router.use('/product', productRoute);
+
 
 // handling error
 router.use((req, res, next) => {
@@ -24,6 +27,7 @@ router.use((error, req, res, next) => {
   return res.status(statusCode).json({
     status: 'error',
     code: statusCode,
+    stack: error.stack,
     message: error.message || 'Internal Server Error'
   })
 })
