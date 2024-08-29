@@ -1,12 +1,11 @@
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
-import { createTokenPair } from '../auth/auth_utils.js';
-import shopModel from '../models/shop.model.js';
-import KeyTokenService from './key_token.service.js';
-import { getInfoData } from '../utils/index.js';
-import { AuthFailureError, BadRequestError, ForbiddenError } from '../core/error.response.js';
-import { findByEmail } from './shop.service.js';
-import JWT from 'jsonwebtoken';
+import { createTokenPair } from '../../auth/auth_utils.js';
+import { AuthFailureError, BadRequestError, ForbiddenError } from '../../core/error.response.js';
+import shopModel from '../../models/shop.model.js';
+import { getInfoData } from '../../utils/index.js';
+import KeyTokenService from '../key_token/key_token.service.js';
+import { findByEmail } from '../shop/shop.service.js';
 
 const Roles = {
   SHOP: '001',

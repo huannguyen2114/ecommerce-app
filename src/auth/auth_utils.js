@@ -1,7 +1,7 @@
 import JWT from 'jsonwebtoken';
 import asyncHandler from '../helpers/async_handlers.js';
 import { AuthFailureError, BadRequestError } from '../core/error.response.js';
-import KeyTokenService from '../services/key_token.service.js';
+import KeyTokenService from '../services/key_token/key_token.service.js';
 import { SuccessResponse } from '../core/success.response.js';
 
 const HEADER = {

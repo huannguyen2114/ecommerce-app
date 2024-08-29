@@ -1,4 +1,4 @@
-import ProductFactory from "../services/product.service.js";
+import ProductFactory from "../services/product/product.service.js";
 import { SuccessResponse } from "../core/success.response.js";
 
 class ProductController {

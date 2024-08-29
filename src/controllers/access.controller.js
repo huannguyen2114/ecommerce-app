@@ -1,5 +1,5 @@
 import { CreatedResponse, SuccessResponse } from "../core/success.response.js";
-import AccessService from "../services/access.service.js";
+import AccessService from "../services/access/access.service.js";
 
 class AccessController {
   handleRefreshToken = async (req, res, next) => {

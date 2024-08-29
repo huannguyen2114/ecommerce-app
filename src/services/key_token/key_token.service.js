@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import keyTokenModel from "../models/key_token.model.js"
+import keyTokenModel from "../../models/key_token.model.js"
 
 const { ObjectId } = Types;
 class KeyTokenService {

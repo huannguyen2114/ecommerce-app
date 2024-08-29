@@ -1,4 +1,4 @@
-import { findById } from "../services/api_key.service.js";
+import { findById } from "../services/api_key/api_key.service.js";
 
 const HEADER = {
   API_KEY: 'x-api-key',
