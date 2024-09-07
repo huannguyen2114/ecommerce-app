@@ -1,5 +1,7 @@
 import { BadRequestError } from "../../../core/error.response.js";
 import { clothing } from '../../../models/product.model.js';
+import { updateProductById } from "../../../models/repositories/product.repo.js";
+import { removeUndefinedObject, updateNestedObject } from "../../../utils/index.js";
 import Product from "./base.product.js";
 // clothing
 export default class Clothing extends Product {
@@ -18,5 +20,21 @@ export default class Clothing extends Product {
     }
 
     return newProduct;
+  }
+
+  async updateProduct(productId) {
+    const objParams = removeUndefinedObject(this);
+
+    if (objParams.product_attributes) {
+      await updateProductById({
+        model: clothing,
+        bodyUpdate: updateNestedObject(objParams.product_attributes),
+        productId
+      });
+    }
+
+    const updateProduct = await super.updateProduct(productId, updateNestedObject(objParams));
+
+    return updateProduct;
   }
 }

@@ -1,5 +1,6 @@
 // define base product class
 import { product } from '../../../models/product.model.js';
+import { updateProductById } from '../../../models/repositories/product.repo.js';
 export default class Product {
   constructor({
     product_name, product_thumb, product_price, product_quantity, product_type, product_description, product_shop, product_attributes
@@ -20,5 +21,10 @@ export default class Product {
       ...this,
       _id: product_id
     });
+  }
+
+  // update product
+  async updateProduct(productId, bodyUpdate) {
+    return await updateProductById({ model: product, productId, bodyUpdate });
   }
 }
